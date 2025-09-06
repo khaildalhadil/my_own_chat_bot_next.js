@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+.poem {
+  overflow-y: scroll;
+  scrollbar-color: #555 #444;
+  scrollbar-width: thin;
+}
