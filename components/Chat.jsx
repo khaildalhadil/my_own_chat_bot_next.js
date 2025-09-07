@@ -1,9 +1,10 @@
 'use client'
 
 import { streamReader } from "openai-edge-stream";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Message from "./Message/Message";
 import Loadding from "./Loadding";
+import FirstPage from "./FirstPage";
 
 export default function Chat() {
 
@@ -12,13 +13,17 @@ export default function Chat() {
   const [newChatMessages, setNewChatMessages] = useState([]);
   const [allMessage, setAllMessage] = useState([]);
   const [isLoading, seIsLoading] = useState(false);
+  const messageRef = useRef()
 
   async function handelSendMessage(e) {
     
+    e.preventDefault();
+    
+    if (!messageText.length) return;
+
     setMessageText("")
     seIsLoading(true)
 
-    e.preventDefault();
 
     setAllMessage(prev => {
       const newChatMessage = [...prev, {
@@ -79,14 +84,19 @@ export default function Chat() {
 
     return newChatMessage
     })
-
   }
+
+  useEffect(()=> {
+    if (messageRef.current) {
+      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    }
+  }, [incomingMesssage, messageText])
 
   return (
     <div className="z-10 absolute flex flex-col justify-between h-screen" >
 
-      {/* {incomingMesssage && <div></div>} */}
-      <div className={` p-10 flex-1 justify-items-end overflow-y-scroll poem`}>
+      {allMessage.length == 0 && <FirstPage />}
+      <div ref={messageRef} className={` p-10 flex-1 justify-items-end overflow-y-scroll poem`}>
         {allMessage.map((message)=> <Message key={message._id} content={message} />)}
         {isLoading && <Loadding incomingMesssage={incomingMesssage} />}
         
@@ -100,7 +110,7 @@ export default function Chat() {
             value={messageText}
             disabled={isLoading}
             onChange={(e) => setMessageText(e.target.value)}
-            placeholder={` ${isLoading ?"ai sending now " : "Send a message..."} `}
+            placeholder={` ${isLoading ?"... يكتب" : "... أكتب الرسالة"} `}
             className={` w-full resize-none rounded-full text-xl bg-[#303030] pt-5 pl-7 text-white m-4 focus:outline ${isLoading? 'cursor-not-allowed': 'cursor-text'} text-end pr-5`} 
           />
           <button disabled={isLoading} className={` border border-green-700 bg-green-600 px-6 font-bold text-white rounded-full my-4 mr-4 ${isLoading? 'cursor-not-allowed': 'cursor-pointer'}`}>Send</button>
