@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import Message from "./Message/Message";
 import Loadding from "./Loadding";
 import FirstPage from "./FirstPage";
+import { IoSend } from "react-icons/io5";
+
 
 export default function Chat() {
 
@@ -93,7 +95,7 @@ export default function Chat() {
   }, [incomingMesssage, messageText])
 
   return (
-    <div className="z-10 absolute flex flex-col justify-between h-screen" >
+    <div className="z-10 absolute flex flex-col justify-between h-screen bg-white" >
 
       {allMessage.length == 0 && <FirstPage />}
       <div ref={messageRef} className={` p-10 flex-1 justify-items-end overflow-y-scroll poem`}>
@@ -105,15 +107,15 @@ export default function Chat() {
       </div>
 
       <form onSubmit={handelSendMessage} className="flex flex-col w-screen  ">
-        <div className="flex w-screen">
+        <div className="flex w-screen  border-t border-gray-300 pt-3">
           <textarea 
             value={messageText}
             disabled={isLoading}
             onChange={(e) => setMessageText(e.target.value)}
             placeholder={` ${isLoading ?"... يكتب" : "... أكتب الرسالة"} `}
-            className={` w-full resize-none rounded-full text-xl bg-[#303030] pt-5 pl-7 text-white m-4 focus:outline ${isLoading? 'cursor-not-allowed': 'cursor-text'} text-end pr-5`} 
+            className={` w-full resize-none text-[#444] ${isLoading? 'cursor-not-allowed': 'cursor-text'} text-end pr-5 pt-2 outline-0 mt-3`} 
           />
-          <button disabled={isLoading} className={` border border-green-700 bg-green-600 px-6 font-bold text-white rounded-full my-4 mr-4 ${isLoading? 'cursor-not-allowed': 'cursor-pointer'}`}>Send</button>
+          <button disabled={isLoading} className={` bg-[#2a2a2a] text-white rounded-xl mr-4 ${isLoading? 'cursor-not-allowed': 'cursor-pointer'} px-3 my-3 ${!messageText.length ? "cursor-not-allowed bg-[#727171]": ""}`}> <IoSend /> </button>
         </div>
         <p className="text-gray-400 p-2 text-center text-sm">Make by khalid abdullah alhadi 🥳</p>
       </form>
