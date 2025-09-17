@@ -98,7 +98,7 @@ export default function Chat() {
     <div className="z-10 absolute flex flex-col justify-between h-screen bg-white" >
 
       {allMessage.length == 0 && <FirstPage />}
-      <div ref={messageRef} className={` p-10 flex-1 justify-items-end overflow-y-scroll poem`}>
+      <div ref={messageRef} className={` p-3 flex-1 justify-items-end overflow-y-scroll poem`}>
         {allMessage.map((message)=> <Message key={message._id} content={message} />)}
         {isLoading && <Loadding incomingMesssage={incomingMesssage} />}
         

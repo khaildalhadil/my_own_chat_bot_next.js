@@ -10,7 +10,7 @@ export default function Loadding({incomingMesssage}) {
     //   </div>
     // </div>
 
-    <div className={`grid grid-cols-[1fr_30px] gap-3 items-center w-fit py-2  `}>
+    <div className={`grid grid-cols-[1fr_30px] gap-3 items-center w-fit py-2 text-end `}>
       <p className={`text-lg rounded-xl bg-[#f0f2f5] text-gray-800 mt-1 p-2 `}>{incomingMesssage}</p>
       <span className="text-2xl"> <RiRobot3Line /> </span>
     </div>
